@@ -47,7 +47,7 @@ class CustomVLC:
         }
 
     def get_music_info(self):
-        print(dir(self.media_list_player.get_media_player()))
+        raise NotImplementedError
 
     def play(self):
         self.media_list_player.play()

@@ -7,11 +7,11 @@ class ControlEndpoint(Resource):
     def get(self):
         if current_app.config['vlc'].player:
             if current_app.config['vlc'].player.is_playing:
-                return 'playing'
+                return {'state': 'playing'}
             else:
-                return 'paused'
+                return {'state': 'paused'}
         else:
-            return 'stopped'
+            return {'state': 'stopped'}
 
     def post(self):
         action = request.form['action']
@@ -28,5 +28,5 @@ class ControlEndpoint(Resource):
         elif action == 'next':
             current_app.config['vlc'].next()
         else:
-            pass
-        return action if action else 'None'
+            return {'error': 'Unrecognized action.'}, 400
+        return {'action': 'Action {} done.'.format(action)}
