@@ -2,7 +2,8 @@ from flask import Blueprint, Flask
 from flask_restful import Api
 
 from flaskapp.custom_vlc import CustomVLC
-from flaskapp.state_endpoint import StateEndpoint
+from flaskapp.control_endpoint import ControlEndpoint
+from flaskapp.youtube_endpoint import YoutubeEndpoint
 
 
 def create_app():
@@ -12,7 +13,8 @@ def create_app():
 
     app.config['vlc'] = CustomVLC()
 
-    app_api.add_resource(StateEndpoint, '/state')
+    app_api.add_resource(ControlEndpoint, '/control')
+    app_api.add_resource(YoutubeEndpoint, '/youtube')
 
     app.register_blueprint(app_blueprint)
     return app

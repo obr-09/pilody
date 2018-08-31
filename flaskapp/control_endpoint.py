@@ -2,7 +2,7 @@ from flask import current_app, request
 from flask_restful import Resource
 
 
-class StateEndpoint(Resource):
+class ControlEndpoint(Resource):
 
     def get(self):
         return 'playing'
@@ -19,4 +19,4 @@ class StateEndpoint(Resource):
             current_app.config['vlc'].stop()
         else:
             pass
-        return action
+        return action if action else 'None'
