@@ -53,6 +53,7 @@ class CustomOMX:
             queue_element = self.music_queue.get(False)
             while queue_element:
                 queue_content.append(queue_element)
+                queue_element = self.music_queue.get(False)
         except Empty:
             pass
         return queue_content
