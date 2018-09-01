@@ -1,6 +1,6 @@
 from flask import current_app, request
 from flask_restful import Resource
-from flask_restful_swagger_2 import swagger
+from flask_restful_swagger import swagger
 
 from flaskapp.youtube_utility import YoutubeUtility
 
