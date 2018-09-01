@@ -12,7 +12,7 @@ def create_app():
     app = Flask(__name__)
     app_blueprint = Blueprint('v1', __name__)
     app_api = Api(app_blueprint, api_version='0.1', title='Pilody', description='OMX media player REST API',
-                  contact='zessirb@gmail.com')
+                  contact='zessirb@gmail.com', api_spec_url='/swagger')
 
     app.config['omx'] = CustomOMX()
 

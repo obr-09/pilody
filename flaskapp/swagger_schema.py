@@ -17,3 +17,21 @@ class YoutubeUrlSchema(Schema):
             'type': 'string'
         }
     }
+
+
+class PlaylistUrlSchema(Schema):
+    type = 'object'
+    properties = {
+        'playlist_url': {
+            'type': 'string'
+        }
+    }
+
+
+class MusicActionSchema(Schema):
+    type = 'object'
+    properties = {
+        'action': {
+            'type': 'string'
+        }
+    }
