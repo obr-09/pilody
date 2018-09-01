@@ -2,8 +2,6 @@ from random import shuffle
 
 from flask import current_app, request
 from flask_restful import Resource
-
-from flaskapp.custom_vlc import CustomVLC
 from flaskapp.youtube_utility import YoutubeUtility
 
 

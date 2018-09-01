@@ -8,7 +8,6 @@ class MusicEndpoint(Resource):
 
     def get(self):
         return {'error': 'Not implemented'}, 501
-        # return current_app.config['vlc'].get_music_info()
 
     def post(self):
         youtube_url = request.form['youtube_url']

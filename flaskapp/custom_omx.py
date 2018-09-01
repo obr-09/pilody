@@ -9,10 +9,11 @@ class CustomOMX:
 
     def __init__(self):
         self.music_queue = Queue()
+        self.previous_queue = Queue()
         self.pause_event = Event()
         self.stop_event = Event()
         self.player_thread = Thread(target=CustomOMX.run_music,
-                                    args=(self.music_queue, self.pause_event, self.stop_event))
+                                    args=(self.music_queue, self.previous.queue, self.pause_event, self.stop_event))
         self.player_thread.start()
 
     def set_audio(self, url):
@@ -50,13 +51,13 @@ class CustomOMX:
             pass
 
     @staticmethod
-    def run_music(music_queue, pause_event, stop_event):
+    def run_music(music_queue, previous_queue, pause_event, stop_event):
         while True:
             music = music_queue.get(True)
             stop_event.clear()
             pause_event.clear()
             player = OMXPlayer(music)
-            while player:
+            while player and (player.is_playing or player.can_play()):
                 sleep(0.05)
                 if pause_event.is_set():
                     player.play_pause()
@@ -65,3 +66,4 @@ class CustomOMX:
                     player.quit()
                     player = None
                     stop_event.clear()
+

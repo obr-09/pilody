@@ -19,4 +19,4 @@ class ControlEndpoint(Resource):
             current_app.config['omx'].next()
         else:
             return {'message': 'Unrecognized action.'}, 400
-        return {'message': 'Action {} done.'.format(action)}, 200
+        return {'message': 'Action {} submitted'.format(action)}, 200
