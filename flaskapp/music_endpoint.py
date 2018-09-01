@@ -4,7 +4,7 @@ from flask_restful import Resource
 from flaskapp.youtube_utility import YoutubeUtility
 
 
-class VideoEndpoint(Resource):
+class MusicEndpoint(Resource):
 
     def get(self):
         return {'error': 'Not implemented'}, 501
@@ -14,4 +14,4 @@ class VideoEndpoint(Resource):
         youtube_url = request.form['youtube_url']
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
-            current_app.config['omx'].set_video(video_data)
+            current_app.config['omx'].set_video(video_data.url)

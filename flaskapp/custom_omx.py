@@ -8,38 +8,23 @@ class CustomOMX:
         self.videos_data = None
         self.player = None
 
-    def set_video(self, video_data):
-        self.videos_data = {0: video_data}
+    def set_audio(self, url):
         if self.player and self.player.can_quit():
             self.player.quit()
-        self.player = OMXPlayer(video_data.audio_url)
-        self.player.stopEvent += self.stop_listener
-
-    def set_playlist(self, videos_data):
-        pass
-
-    def get_playlist_info(self):
-        return {
-            'title': self.videos_data.title if self.videos_data.title else '',
-            'author': self.videos_data.author if self.videos_data.author else '',
-            'description': self.videos_data.description if self.videos_data.description else '',
-            'length': len(self.videos_data)
-        }
-
-    def get_music_info(self):
-        raise NotImplementedError
+        self.player = OMXPlayer(url)
+        self.player.pause()
 
     def get_state(self):
         return self.player.playback_status() if self.player else 'stopped'
 
     def play(self):
         if self.player and self.player.can_play():
-            self.player.play()
+            self.player.play_sync()
 
     def stop(self):
         if self.player and self.player.can_quit():
             self.player.quit()
-            self.player = None
+        self.player = None
 
     def toggle_pause(self):
         if self.player and self.player.can_pause():
@@ -50,8 +35,3 @@ class CustomOMX:
 
     def next(self):
         pass
-
-    def stop_listener(self, player):
-        print('STOP !')
-        from flaskapp.youtube_utility import YoutubeUtility
-        self.player = OMXPlayer(YoutubeUtility.get_youtube_video('https://www.youtube.com/watch?v=YixAD9GIAuY'))

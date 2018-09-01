@@ -6,7 +6,7 @@ from flaskapp.custom_vlc import CustomVLC
 from flaskapp.custom_omx import CustomOMX
 from flaskapp.control_endpoint import ControlEndpoint
 from flaskapp.playlist_endpoint import PlaylistEndpoint
-from flaskapp.video_endpoint import VideoEndpoint
+from flaskapp.music_endpoint import MusicEndpoint
 
 
 def create_app():
@@ -19,7 +19,7 @@ def create_app():
 
     app_api.add_resource(ControlEndpoint, '/control')
     app_api.add_resource(PlaylistEndpoint, '/playlist')
-    app_api.add_resource(VideoEndpoint, '/video')
+    app_api.add_resource(MusicEndpoint, '/video')
 
     app.register_blueprint(app_blueprint)
     return app
