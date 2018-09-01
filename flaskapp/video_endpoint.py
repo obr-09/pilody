@@ -1,8 +1,7 @@
 from flask import current_app, request
 from flask_restful import Resource
 
-from flaskapp.custom_omx import CustomOMX
-from flaskapp.custom_vlc import CustomVLC
+from flaskapp.youtube_utility import YoutubeUtility
 
 
 class VideoEndpoint(Resource):
@@ -14,5 +13,5 @@ class VideoEndpoint(Resource):
     def post(self):
         youtube_url = request.form['youtube_url']
         if youtube_url:
-            video_data = CustomOMX.get_youtube_video(youtube_url)
+            video_data = YoutubeUtility.get_youtube_video(youtube_url)
             current_app.config['omx'].set_video(video_data)

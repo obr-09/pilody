@@ -1,20 +1,8 @@
-import pafy
 from omxplayer.player import OMXPlayer
 from random import shuffle
 
 
 class CustomOMX:
-
-    @staticmethod
-    def get_youtube_video(youtube_url):
-        video = pafy.new(youtube_url)
-        audio_stream = video.getbestaudio()
-        video.audio_url = audio_stream.url
-        return video
-
-    @staticmethod
-    def get_youtube_playlist(playlist_url):
-        return pafy.get_playlist2(playlist_url)
 
     def __init__(self):
         self.videos_data = None
@@ -51,6 +39,7 @@ class CustomOMX:
     def stop(self):
         if self.player and self.player.can_quit():
             self.player.quit()
+            self.player = None
 
     def toggle_pause(self):
         if self.player and self.player.can_pause():
