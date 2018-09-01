@@ -1,8 +1,6 @@
 import pafy
 from omxplayer.player import OMXPlayer
 from random import shuffle
-from vlc import Instance
-from time import sleep
 
 
 class CustomOMX:
@@ -10,8 +8,8 @@ class CustomOMX:
     @staticmethod
     def get_youtube_video(youtube_url):
         video = pafy.new(youtube_url)
-        stream = video.getbest()
-        video.url = stream.url
+        audio_stream = video.getbestaudio()
+        video.audio_url = audio_stream.url
         return video
 
     @staticmethod
@@ -24,7 +22,7 @@ class CustomOMX:
 
     def set_video(self, video_data):
         self.videos_data = {0: video_data}
-        self.player = OMXPlayer('rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov')
+        self.player = OMXPlayer(video_data.audio_url)
 
     def set_playlist(self, videos_data):
         pass
@@ -44,16 +42,13 @@ class CustomOMX:
         return self.player.playback_status()
 
     def play(self):
-        if self.player.can_play():
-            self.player.play()
+        self.player.play()
 
     def stop(self):
-        if self.player:
-            self.player.quit()
+        self.player.quit()
 
     def toggle_pause(self):
-        if self.player:
-            self.player.play_pause()
+        self.player.play_pause()
 
     def previous(self):
         pass
