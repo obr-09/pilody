@@ -18,12 +18,12 @@ class CustomOMX:
         return pafy.get_playlist2(playlist_url)
 
     def __init__(self):
-        pass
+        self.videos_data = None
+        self.player = None
 
     def set_video(self, video_data):
-        self.videos_data = [video_data]
+        self.videos_data = {0: video_data}
         self.player = OMXPlayer(video_data.url)
-        self.player.play()
 
     def set_playlist(self, videos_data):
         pass

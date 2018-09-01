@@ -11,5 +11,5 @@ to work on Raspberry pi.
 $ sudo apt install python3 python3-pip
 $ git clone https://github.com/zessirb/pilody.git
 $ cd pilody && pip3 install -r requirements.txt
-$ python -m flaskapp --host=0.0.0.0
+$ python -m flaskapp
 ```
