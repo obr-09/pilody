@@ -42,16 +42,19 @@ class CustomOMX:
         raise NotImplementedError
 
     def get_state(self):
-        return self.player.playback_status()
+        return self.player.playback_status() if self.player else 'stopped'
 
     def play(self):
-        self.player.play()
+        if self.player and self.player.can_play():
+            self.player.play()
 
     def stop(self):
-        self.player.quit()
+        if self.player and self.player.can_quit():
+            self.player.quit()
 
     def toggle_pause(self):
-        self.player.play_pause()
+        if self.player and self.player.can_pause():
+            self.player.play_pause()
 
     def previous(self):
         pass
