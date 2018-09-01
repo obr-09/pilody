@@ -9,11 +9,7 @@ class ControlEndpoint(Resource):
 
     def post(self):
         action = request.form['action']
-        if action == 'play':
-            current_app.config['omx'].play()
-        elif action == 'resume':
-            current_app.config['omx'].toggle_pause()
-        elif action == 'pause':
+        if action in ['play', 'resume', 'pause']:
             current_app.config['omx'].toggle_pause()
         elif action == 'stop':
             current_app.config['omx'].stop()
@@ -22,5 +18,5 @@ class ControlEndpoint(Resource):
         elif action == 'next':
             current_app.config['omx'].next()
         else:
-            return {'error': 'Unrecognized action.'}, 400
-        return {'action': 'Action {} done.'.format(action)}
+            return {'message': 'Unrecognized action.'}, 400
+        return {'message': 'Action {} done.'.format(action)}, 200
