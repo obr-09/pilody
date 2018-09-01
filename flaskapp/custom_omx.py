@@ -2,6 +2,7 @@ import pafy
 from omxplayer.player import OMXPlayer
 from random import shuffle
 from vlc import Instance
+from time import sleep
 
 
 class CustomOMX:
@@ -24,6 +25,8 @@ class CustomOMX:
     def set_video(self, video_data):
         self.videos_data = {0: video_data}
         self.player = OMXPlayer(video_data.url)
+        sleep(2.5)
+        self.player.play_sync()
 
     def set_playlist(self, videos_data):
         pass
@@ -40,7 +43,7 @@ class CustomOMX:
         raise NotImplementedError
 
     def play(self):
-        if self.player:
+        if self.player.can_play():
             self.player.play()
 
     def stop(self):
