@@ -6,6 +6,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 
 from flaskapp.custom_omx import CustomOMX
 from flaskapp.endpoints.control_endpoint import ControlEndpoint
+from flaskapp.endpoints.gui_endpoint import GuiEndpoint
 from flaskapp.endpoints.music_endpoint import MusicEndpoint
 from flaskapp.endpoints.playlist_endpoint import PlaylistEndpoint
 
@@ -22,6 +23,7 @@ def create_app():
     flask_app.config['omx'] = CustomOMX()
 
     app_api.add_resource(ControlEndpoint, '/control')
+    app_api.add_resource(GuiEndpoint, '/gui')
     app_api.add_resource(MusicEndpoint, '/music')
     app_api.add_resource(PlaylistEndpoint, '/playlist')
 
