@@ -22,7 +22,8 @@ class CustomOMX:
 
     def set_video(self, video_data):
         self.videos_data = [video_data]
-        self.player = OMXPlayer('rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov')
+        self.player = OMXPlayer(video_data.url)
+        self.player.play()
 
     def set_playlist(self, videos_data):
         pass
