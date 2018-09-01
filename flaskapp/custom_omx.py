@@ -49,14 +49,18 @@ class CustomOMX:
     @staticmethod
     def run_music(music_queue, pause_event, stop_event):
         while True:
+            print(music_queue.qsize())
             music = music_queue.get(True)
             player = OMXPlayer(music)
             while player and (player.is_playing() or player.can_play()):
+                print('playing !')
                 sleep(0.05)
                 if pause_event.is_set():
+                    print('PAUSE !')
                     player.play_pause()
                     pause_event.clear()
                 if stop_event.is_set():
+                    print('STOP !')
                     player.quit()
                     player = None
                     stop_event.clear()
