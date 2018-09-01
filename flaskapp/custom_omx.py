@@ -61,8 +61,8 @@ class CustomOMX:
 
     @staticmethod
     def run_music(music_queue, previous_queue, pause_event, stop_event):
-        os.system('killall -s 9 omxplayer.bin')
         while True:
+            os.system('killall -s 9 omxplayer.bin')
             music = music_queue.get(True)
             stop_event.clear()
             pause_event.clear()
