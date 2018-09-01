@@ -24,9 +24,7 @@ class CustomOMX:
 
     def set_video(self, video_data):
         self.videos_data = {0: video_data}
-        self.player = OMXPlayer(video_data.url)
-        sleep(2.5)
-        self.player.play_sync()
+        self.player = OMXPlayer('rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov')
 
     def set_playlist(self, videos_data):
         pass
@@ -41,6 +39,9 @@ class CustomOMX:
 
     def get_music_info(self):
         raise NotImplementedError
+
+    def get_state(self):
+        return self.player.playback_status()
 
     def play(self):
         if self.player.can_play():
