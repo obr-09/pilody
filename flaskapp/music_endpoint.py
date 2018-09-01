@@ -24,7 +24,12 @@ class MusicEndpoint(Resource):
         ],
         'responses': {
             '200': {
-                'Description': 'Music changed'
+                'description': 'Music changed',
+                'examples': {
+                    'application/json': {
+                        'message': 'The music was submitted'
+                    }
+                }
             }
         }
     })
