@@ -1,8 +1,8 @@
-from flask import current_app, request, render_template
+from flask import render_template, Response
 from flask_restful import Resource
 
 
 class GuiEndpoint(Resource):
 
     def get(self):
-        return render_template('player.html')
+        return Response(render_template('player.html'), status=200, mimetype='text/html')
