@@ -3,10 +3,10 @@ from flask import Blueprint, Flask
 from flask_cors import CORS
 from flask_restful_swagger_2 import Api
 from flask_swagger_ui import get_swaggerui_blueprint
-from flaskapp.control_endpoint import ControlEndpoint
-from flaskapp.music_endpoint import MusicEndpoint
 
 from flaskapp.custom_omx import CustomOMX
+from flaskapp.endpoints.control_endpoint import ControlEndpoint
+from flaskapp.endpoints.music_endpoint import MusicEndpoint
 from flaskapp.endpoints.playlist_endpoint import PlaylistEndpoint
 
 
