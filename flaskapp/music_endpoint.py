@@ -10,6 +10,7 @@ class MusicEndpoint(Resource):
     def get(self):
         return {'error': 'Not implemented'}, 501
 
+    'Setting a new music'
     @swagger.operation(
         parameters=[
             {
