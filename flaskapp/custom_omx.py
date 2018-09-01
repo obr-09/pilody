@@ -17,6 +17,7 @@ class CustomOMX:
 
         self.player_thread = Thread(target=CustomOMX.run_music,
                                     args=(self.music_queue, self.pause_event, self.stop_event))
+        self.player_thread.start()
 
     def set_audio(self, url):
         self.empty_queue()
