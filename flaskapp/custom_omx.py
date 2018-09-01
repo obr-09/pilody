@@ -13,7 +13,7 @@ class CustomOMX:
         if self.player and self.player.can_quit():
             self.player.quit()
         self.player = OMXPlayer(video_data.audio_url)
-        self.player.stopEvent = self.stop_listener
+        self.player.stopEvent += self.stop_listener
 
     def set_playlist(self, videos_data):
         pass
@@ -52,5 +52,6 @@ class CustomOMX:
         pass
 
     def stop_listener(self, player):
+        print('STOP !')
         from flaskapp.youtube_utility import YoutubeUtility
         self.player = OMXPlayer(YoutubeUtility.get_youtube_video('https://www.youtube.com/watch?v=YixAD9GIAuY'))
