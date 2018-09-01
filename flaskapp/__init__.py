@@ -14,7 +14,7 @@ def create_app():
     app_api = Api(app_blueprint)
 
     app.config['vlc'] = CustomVLC()
-    # app.config['omx'] = CustomOMX()
+    app.config['omx'] = CustomOMX()
 
     app_api.add_resource(ControlEndpoint, '/control')
     app_api.add_resource(PlaylistEndpoint, '/playlist')
