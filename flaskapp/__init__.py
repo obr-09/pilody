@@ -19,7 +19,7 @@ def create_app():
     flask_app.config['omx'] = CustomOMX()
 
     # Blueprint for REST API
-    app_blueprint = Blueprint('v1', __name__)
+    app_blueprint = Blueprint('rest', __name__)
     app_api = SwaggerApi(app_blueprint, api_version='0.1', title='Pilody', description='OMX media player REST API',
                   contact='zessirb@gmail.com', api_spec_url='/swagger')
     app_api.add_resource(ControlEndpoint, '/control')
@@ -33,7 +33,7 @@ def create_app():
     flask_app.register_blueprint(swagger_blueprint, url_prefix='/docs')
 
     # Blueprint for GUI
-    gui_blueprint = Blueprint('v1', __name__)
+    gui_blueprint = Blueprint('gui', __name__)
     gui_api = FlaskApi(gui_blueprint)
     gui_api.add_resource(GuiEndpoint, '/gui')
     flask_app.register_blueprint(gui_blueprint)
