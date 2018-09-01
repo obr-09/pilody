@@ -26,7 +26,7 @@ class MusicEndpoint(Resource):
         'responses': {
             '200': {
                 'description': 'Music changed',
-                'schema': SuccessModel
+                'schema': SuccessModel,
                 'examples': {
                     'application/json': {
                         'message': 'The music was submitted'
