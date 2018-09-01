@@ -65,7 +65,7 @@ class CustomOMX:
             stop_event.clear()
             pause_event.clear()
             player = OMXPlayer(music)
-            while player and (player.is_playing or player.can_play()):
+            while player and (player.is_playing or player.playback_status() == 'Paused'):
                 sleep(0.05)
                 if pause_event.is_set():
                     player.play_pause()
