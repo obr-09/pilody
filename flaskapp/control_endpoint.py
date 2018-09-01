@@ -16,17 +16,17 @@ class ControlEndpoint(Resource):
     def post(self):
         action = request.form['action']
         if action == 'play':
-            current_app.config['vlc'].play()
+            current_app.config['omx'].play()
         elif action == 'resume':
-            current_app.config['vlc'].toggle_pause()
+            current_app.config['omx'].toggle_pause()
         elif action == 'pause':
-            current_app.config['vlc'].toggle_pause()
+            current_app.config['omx'].toggle_pause()
         elif action == 'stop':
-            current_app.config['vlc'].stop()
+            current_app.config['omx'].stop()
         elif action == 'previous':
-            current_app.config['vlc'].previous()
+            current_app.config['omx'].previous()
         elif action == 'next':
-            current_app.config['vlc'].next()
+            current_app.config['omx'].next()
         else:
             return {'error': 'Unrecognized action.'}, 400
         return {'action': 'Action {} done.'.format(action)}
