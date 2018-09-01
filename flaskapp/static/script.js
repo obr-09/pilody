@@ -1,0 +1,1 @@
+console.log(document.getElementsByName('body')[0].getAttribute('data-url'));
