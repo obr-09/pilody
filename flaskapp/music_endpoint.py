@@ -2,7 +2,7 @@ from flask import current_app, request
 from flask_restful import Resource
 from flask_restful_swagger_2 import swagger
 
-from flaskapp.swagger_schema import SuccessModel
+from flaskapp.swagger_schema import MessageModel, YoutubeUrlSchema
 from flaskapp.youtube_utility import YoutubeUtility
 
 
@@ -18,6 +18,7 @@ class MusicEndpoint(Resource):
             {
                 'name': 'youtube_url',
                 'description': 'URL to a youtube video',
+                'schema': YoutubeUrlSchema,
                 'required': True,
                 'in': 'body',
                 'type': 'string'
@@ -26,7 +27,7 @@ class MusicEndpoint(Resource):
         'responses': {
             '200': {
                 'description': 'Music changed',
-                'schema': SuccessModel,
+                'schema': MessageModel,
                 'examples': {
                     'application/json': {
                         'message': 'The music was submitted'
