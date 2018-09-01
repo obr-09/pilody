@@ -1,5 +1,8 @@
+from queue import Queue, Empty
+from threading import Event, Thread
+from time import sleep
+
 from omxplayer.player import OMXPlayer
-from random import shuffle
 
 
 class CustomOMX:
@@ -8,30 +11,52 @@ class CustomOMX:
         self.videos_data = None
         self.player = None
 
-    def set_audio(self, url):
-        if self.player and self.player.can_quit():
-            self.player.quit()
-        self.player = OMXPlayer(url)
-        self.player.pause()
+        self.music_queue = Queue()
+        self.pause_event = Event()
+        self.stop_event = Event()
 
-    def get_state(self):
-        return self.player.playback_status() if self.player else 'stopped'
+        self.player_thread = Thread(target=CustomOMX.run_music,
+                                    args=(self.music_queue, self.pause_event, self.change_event))
+
+    def set_audio(self, url):
+        self.empty_queue()
+        self.music_queue.put(url)
 
     def play(self):
-        if self.player and self.player.can_play():
-            self.player.play_sync()
+        pass
 
     def stop(self):
-        if self.player and self.player.can_quit():
-            self.player.quit()
-        self.player = None
+        self.empty_queue()
+        self.stop_event.set()
 
     def toggle_pause(self):
-        if self.player and self.player.can_pause():
-            self.player.play_pause()
+        self.pause_event.set()
 
     def previous(self):
         pass
 
     def next(self):
+        self.stop_event.set()
         pass
+
+    def empty_queue(self):
+        try:
+            while self.music_queue.get(False):
+                pass
+        except Empty:
+            pass
+
+    @staticmethod
+    def run_music(music_queue, pause_event, stop_event):
+        while True:
+            music = music_queue.get(True)
+            player = OMXPlayer(music)
+            while player and (player.is_playing() or player.can_play()):
+                sleep(0.05)
+                if pause_event.is_set():
+                    player.play_pause()
+                    pause_event.clear()
+                if stop_event.is_set():
+                    player.quit()
+                    player = None
+                    stop_event.clear()

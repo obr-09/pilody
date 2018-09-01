@@ -15,3 +15,4 @@ class MusicEndpoint(Resource):
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
             current_app.config['omx'].set_audio(video_data.audio_url)
+            current_app.config['omx'].play()

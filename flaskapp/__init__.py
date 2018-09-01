@@ -19,7 +19,7 @@ def create_app():
 
     app_api.add_resource(ControlEndpoint, '/control')
     app_api.add_resource(PlaylistEndpoint, '/playlist')
-    app_api.add_resource(MusicEndpoint, '/video')
+    app_api.add_resource(MusicEndpoint, '/music')
 
     app.register_blueprint(app_blueprint)
     return app
