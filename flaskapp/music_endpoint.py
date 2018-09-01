@@ -14,4 +14,4 @@ class MusicEndpoint(Resource):
         youtube_url = request.form['youtube_url']
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
-            current_app.config['omx'].set_video(video_data.url)
+            current_app.config['omx'].set_audio(video_data.url)
