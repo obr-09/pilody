@@ -18,8 +18,8 @@ class CustomOMX:
 
     def set_audio(self, url):
         self.empty_queue()
-        self.stop_event.set()
         self.music_queue.put(url)
+        self.stop_event.set()
 
     def add_audio(self, url):
         self.music_queue.put(url)
@@ -39,7 +39,6 @@ class CustomOMX:
 
     def next(self):
         self.stop_event.set()
-        pass
 
     def empty_queue(self):
         try:
@@ -51,10 +50,9 @@ class CustomOMX:
     @staticmethod
     def run_music(music_queue, pause_event, stop_event):
         while True:
-            print(music_queue.qsize())
             music = music_queue.get(True)
             player = OMXPlayer(music)
-            while player and (player.is_playing() or player.can_play()):
+            while player:
                 sleep(0.05)
                 if pause_event.is_set():
                     player.play_pause()
