@@ -22,7 +22,10 @@ class CustomOMX:
 
     def set_video(self, video_data):
         self.videos_data = {0: video_data}
+        if self.player.can_quit():
+            self.player.quit()
         self.player = OMXPlayer(video_data.audio_url)
+        self.player.stopEvent = self.stop_listener
 
     def set_playlist(self, videos_data):
         pass
@@ -55,3 +58,6 @@ class CustomOMX:
 
     def next(self):
         pass
+
+    def stop_listener(self):
+        print("STOP")
