@@ -11,7 +11,7 @@ to work on Raspberry pi.
 $ sudo apt install python3 python3-pip
 $ git clone https://github.com/zessirb/pilody.git
 $ cd pilody && pip3 install -r requirements.txt
-$ FLASK_APP=flaskapp python -m flask run
+$ FLASK_APP=flaskapp python -m flask run --host=0.0.0.0
 ```
 
 ## Using the REST API
