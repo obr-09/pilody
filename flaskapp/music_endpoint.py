@@ -1,6 +1,6 @@
 from flask import current_app, request
 from flask_restful import Resource
-from flask_restful_swagger import swagger
+from flask_restful_swagger_2 import swagger
 
 from flaskapp.youtube_utility import YoutubeUtility
 
@@ -10,24 +10,24 @@ class MusicEndpoint(Resource):
     def get(self):
         return {'error': 'Not implemented'}, 501
 
-    'Setting a new music'
-    @swagger.operation(
-        parameters=[
+    @swagger.doc({
+        'tags': ['music'],
+        'description': 'Setting a new music',
+        'parameters': [
             {
                 'name': 'youtube_url',
                 'description': 'URL to a youtube video',
                 'required': True,
-                'allowMultiple': False,
-                'paramType': 'body'
+                'in': 'body',
+                'type': 'string'
             }
         ],
-        responseMessages=[
-            {
-                'code': 200,
-                'message': 'The music was submitted'
+        'responses': {
+            '200': {
+                'Description': 'Music changed'
             }
-        ]
-    )
+        }
+    })
     def post(self):
         youtube_url = request.form['youtube_url']
         if youtube_url:

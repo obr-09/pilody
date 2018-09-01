@@ -1,6 +1,6 @@
 flask
 flask-restful
-flask-restful-swagger
+flask-restful-swagger-2
 omxplayer-wrapper
 pafy
 youtube-dl

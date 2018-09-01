@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from flask import Blueprint, Flask
-from flask_restful import Api
-from flask_restful_swagger import swagger
+from flask_restful_swagger_2 import Api
 
 from flaskapp.custom_omx import CustomOMX
 from flaskapp.control_endpoint import ControlEndpoint
@@ -12,7 +11,8 @@ from flaskapp.music_endpoint import MusicEndpoint
 def create_app():
     app = Flask(__name__)
     app_blueprint = Blueprint('v1', __name__)
-    app_api = swagger.docs(Api(app_blueprint), apiVersion='0.1')
+    app_api = Api(app_blueprint, api_version='0.1', title='Pilody', description='OMX media player REST API',
+                  contact='zessirb@gmail.com')
 
     app.config['omx'] = CustomOMX()
 
