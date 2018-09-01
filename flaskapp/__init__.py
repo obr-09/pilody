@@ -13,7 +13,6 @@ def create_app():
     app = Flask(__name__)
     app_blueprint = Blueprint('v1', __name__)
     app_api = swagger.docs(Api(app_blueprint), apiVersion='0.1')
-    app_api = Api(app_blueprint)
 
     app.config['omx'] = CustomOMX()
 
