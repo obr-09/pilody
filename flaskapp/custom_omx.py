@@ -2,6 +2,7 @@ from queue import Queue, Empty, LifoQueue
 from threading import Event, Thread
 from time import sleep
 
+import os
 from omxplayer.player import OMXPlayer
 
 
@@ -60,6 +61,7 @@ class CustomOMX:
 
     @staticmethod
     def run_music(music_queue, previous_queue, pause_event, stop_event):
+        os.system('killall -s 9 omxplayer.bin')
         while True:
             music = music_queue.get(True)
             stop_event.clear()
