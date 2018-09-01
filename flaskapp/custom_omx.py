@@ -8,9 +8,6 @@ from omxplayer.player import OMXPlayer
 class CustomOMX:
 
     def __init__(self):
-        self.videos_data = None
-        self.player = None
-
         self.music_queue = Queue()
         self.pause_event = Event()
         self.stop_event = Event()
@@ -21,6 +18,10 @@ class CustomOMX:
 
     def set_audio(self, url):
         self.empty_queue()
+        self.stop_event.set()
+        self.music_queue.put(url)
+
+    def add_audio(self, url):
         self.music_queue.put(url)
 
     def play(self):
@@ -54,14 +55,11 @@ class CustomOMX:
             music = music_queue.get(True)
             player = OMXPlayer(music)
             while player and (player.is_playing() or player.can_play()):
-                print('playing !')
                 sleep(0.05)
                 if pause_event.is_set():
-                    print('PAUSE !')
                     player.play_pause()
                     pause_event.clear()
                 if stop_event.is_set():
-                    print('STOP !')
                     player.quit()
                     player = None
                     stop_event.clear()

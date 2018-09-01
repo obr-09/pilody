@@ -1,19 +1,20 @@
-from flask import current_app, request, abort
+from flask import current_app, request
 from flask_restful import Resource
 
 from flaskapp.custom_vlc import CustomVLC
+from flaskapp.youtube_utility import YoutubeUtility
 
 
 class PlaylistEndpoint(Resource):
 
     def get(self):
-        return current_app.config['vlc'].get_playlist_info()
+        pass
 
     def post(self):
-        playlist_url = request.form['playlist_url']
-        if playlist_url:
-            videos_data = CustomVLC.get_youtube_playlist(playlist_url)
-            current_app.config['vlc'].set_playlist(videos_data)
-            return current_app.config['vlc'].get_playlist_info()
-        else:
-            return {'error': 'Expected "playlist_url" parameter'}, 400
+        pass
+
+    def patch(self):
+        youtube_url = request.form['youtube_url']
+        if youtube_url:
+            video_data = YoutubeUtility.get_youtube_video(youtube_url)
+            current_app.config['omx'].add_audio(video_data.audio_url)
