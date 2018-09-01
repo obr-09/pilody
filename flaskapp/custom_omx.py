@@ -52,4 +52,5 @@ class CustomOMX:
         pass
 
     def stop_listener(self):
-        print("STOP")
+        from flaskapp.youtube_utility import YoutubeUtility
+        self.player = OMXPlayer(YoutubeUtility.get_youtube_video('https://www.youtube.com/watch?v=YixAD9GIAuY'))
