@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from flask import Blueprint, Flask
 from flask_cors import CORS
 from flask_restful import Api as FlaskApi
@@ -39,7 +38,3 @@ def create_app():
     flask_app.register_blueprint(gui_blueprint)
 
     return flask_app
-
-
-app = create_app()
-app.run(host='0.0.0.0')

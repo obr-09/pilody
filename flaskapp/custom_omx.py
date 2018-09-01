@@ -75,5 +75,3 @@ class CustomOMX:
                     player = None
                     stop_event.clear()
             previous_queue.put(music)
-            if player and player.can_control():
-                player.quit()
