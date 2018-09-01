@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from flask import Blueprint, Flask
+from flask_cors import CORS
 from flask_restful_swagger_2 import Api
 from flask_swagger_ui import get_swaggerui_blueprint
 
@@ -11,8 +12,10 @@ from flaskapp.music_endpoint import MusicEndpoint
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app_blueprint = Blueprint('v1', __name__)
-    swagger_blueprint = get_swaggerui_blueprint('/docs', 'localhost:5000/swagger.json', config={'app_name': 'Pilody'})
+    swagger_blueprint = get_swaggerui_blueprint('/docs', 'http://127.0.0.1:5000/swagger.json',
+                                                config={'app_name': 'Pilody'})
     app_api = Api(app_blueprint, api_version='0.1', title='Pilody', description='OMX media player REST API',
                   contact='zessirb@gmail.com', api_spec_url='/swagger')
 
