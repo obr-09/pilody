@@ -143,7 +143,8 @@ class OMXRunner:
 
     def try_next(self):
         try:
-            if (not self.player or self.player.playback_status() == 'Stopped') and not self.pause_event.is_set() and not
+            if (not self.player or self.player.playback_status() == 'Stopped') and not self.pause_event.is_set() and \
+                    not self.stop_event.is_set():
                 self.next()
         except OMXPlayerDeadError:
             self.next()
