@@ -42,7 +42,6 @@ class MusicEndpoint(Resource):
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
             if video_data:
                 current_app.config['omx'].set_audio(video_data.audio_url)
-                current_app.config['omx'].play()
                 return MessageModel(message='The music was submitted'), 200
             else:
                 return MessageModel(message='No music found from the Youtube url'), 400

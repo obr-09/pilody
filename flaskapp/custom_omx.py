@@ -9,72 +9,121 @@ from omxplayer.player import OMXPlayer
 class CustomOMX:
 
     def __init__(self):
-        self.music_queue = Queue()
         self.previous_queue = LifoQueue()
+        self.next_queue = Queue()
         self.pause_event = Event()
+        self.previous_event = Event()
+        self.next_event = Event()
         self.stop_event = Event()
-        self.player_thread = Thread(target=CustomOMX.run_music,
-                                    args=(self.music_queue, self.previous_queue, self.pause_event, self.stop_event))
+        self.exit_event = Event()
+        self.omx_runner = OMXRunner(self.previous_queue, self.next_queue, self.pause_event, self.previous_event,
+                                    self.next_event, self.stop_event, self.exit_event)
+        self.player_thread = Thread(target=self.omx_runner.run)
         self.player_thread.start()
 
     def set_audio(self, url):
         self.empty_queue()
         self.stop_event.set()
-        self.music_queue.put(url)
+        self.next_queue.put(url)
+        self.pause_event.set()
 
     def add_audio(self, url):
-        self.music_queue.put(url)
+        self.next_queue.put(url)
 
     def set_playlist(self, url_list):
         self.empty_queue()
         self.stop_event.set()
         for url in url_list:
-            self.music_queue.put(url)
+            self.next_queue.put(url)
+        self.pause_event.set()
 
     def stop(self):
-        self.empty_queue()
         self.stop_event.set()
 
     def toggle_pause(self):
         self.pause_event.set()
 
     def previous(self):
-        previous_music = self.previous_queue.get(False)
+        try:
+            previous_music = self.previous_queue.get(False)
+        except Empty:
+            previous_music = None
         if previous_music:
             next_musics = self.empty_queue()
             next_musics.insert(0, previous_music)
             self.set_playlist(next_musics)
 
     def next(self):
-        self.stop_event.set()
+        self.next_event.set()
 
     def empty_queue(self):
         queue_content = []
         try:
-            queue_element = self.music_queue.get(False)
+            queue_element = self.next_queue.get(False)
             while queue_element:
                 queue_content.append(queue_element)
-                queue_element = self.music_queue.get(False)
+                queue_element = self.next_queue.get(False)
         except Empty:
             pass
         return queue_content
 
-    @staticmethod
-    def run_music(music_queue, previous_queue, pause_event, stop_event):
-        while True:
-            os.system('killall -s 9 omxplayer.bin')
-            music = music_queue.get(True)
-            stop_event.clear()
-            pause_event.clear()
-            player = OMXPlayer(music)
-            while player and (player.is_playing() or player.playback_status() == 'Paused'):
-                sleep(0.05)
-                if pause_event.is_set():
-                    player.play_pause()
-                    pause_event.clear()
-                if stop_event.is_set():
-                    player.quit()
-                    player = None
-                    stop_event.clear()
-            if player:
-                previous_queue.put(music)
+
+class OMXRunner:
+
+    def __init__(self, previous_queue, next_queue, pause_event, previous_event, next_event, stop_event, exit_event):
+        self.previous_queue = previous_queue
+        self.next_queue = next_queue
+        self.pause_event = pause_event
+        self.previous_event = previous_event
+        self.next_event = next_event
+        self.stop_event = stop_event
+        self.exit_event = exit_event
+        self.player = None
+        self.current_music = None
+
+    def run(self):
+        while not self.exit_event.is_set():
+            sleep(0.05)
+            if self.pause_event.is_set():
+                self.play_pause()
+            if self.stop_event.is_set():
+                self.stop()
+            if self.previous_event.is_set():
+                self.previous()
+            if self.next_event.is_set():
+                self.next()
+            self.try_next()
+
+    def play_pause(self):
+        self.stop_event.clear()
+        if self.player:
+            self.player.play_pause()
+        elif self.current_music:
+            self.player = OMXPlayer(self.current_music)
+        self.pause_event.clear()
+
+    def stop(self):
+        if self.player:
+            self.player.quit()
+            self.player = None
+
+    def previous(self):
+        self.stop_event.clear()
+        self.stop()
+
+    def next(self):
+        self.stop_event.clear()
+        self.stop()
+        if self.current_music:
+            self.previous_queue.put(self.current_music)
+        try:
+            self.current_music = self.next_queue.get(block=False)
+        except Empty:
+            pass
+        if self.current_music:
+            self.player = OMXPlayer(self.current_music)
+
+    def try_next(self):
+        if (not self.player or not self.player.is_playing) and \
+                not self.pause_event.is_set() and not self.stop_event.is_set():
+            self.next()

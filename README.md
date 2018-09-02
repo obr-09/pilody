@@ -1,6 +1,6 @@
 # Pilody
-Pilody was a small media center connected to Youtube concept written in python with a REST API to control it designed 
-to work on Raspberry pi.  
+Pilody is a small media center concept connected to Youtube, written in python with a REST API to control it. 
+It is designed to work on Raspberry pi and is using the OMXplayer.  
 
 ## Installation
 * Install python3 and pip3
