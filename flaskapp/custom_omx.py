@@ -55,6 +55,7 @@ class CustomOMX:
             next_musics = self.empty_queue()
             next_musics.insert(0, previous_music)
             self.set_playlist(next_musics)
+            self.previous_event.set()
 
     def next(self):
         self.next_event.set()
@@ -113,22 +114,32 @@ class OMXRunner:
     def previous(self):
         self.stop_event.clear()
         self.stop()
+        next_queue = [self.current_music]
+        try:
+            self.current_music = self.next_queue.get_nowait()
+            music_queued = self.next_queue.get_nowait()
+            while music_queued:
+                next_queue.append(music_queued)
+                music_queued = self.next_queue.get_nowait()
+        except Empty:
+            pass
+        for music in next_queue:
+            self.next_queue.put(music)
+        if self.current_music:
+            self.player = OMXPlayer(self.current_music)
 
     def next(self):
         self.stop_event.clear()
         self.stop()
-        print('next : stopped')
         if self.current_music:
             self.previous_queue.put_nowait(self.current_music)
-            print('next : previous : ' + self.current_music)
         try:
             self.current_music = self.next_queue.get_nowait()
-            print('next : current : ' + self.current_music)
         except Empty:
             pass
         if self.current_music:
             self.player = OMXPlayer(self.current_music)
-        print('next : player created')
+        self.next_event.clear()
 
     def try_next(self):
         if (not self.player or not self.player.is_playing) and \
