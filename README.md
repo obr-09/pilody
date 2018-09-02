@@ -11,7 +11,7 @@ It is designed to work on Raspberry pi and is using the OMXplayer.
 $ sudo apt install python3 python3-pip
 $ git clone https://github.com/zessirb/pilody.git
 $ cd pilody && pip3 install -r requirements.txt
-$ FLASK_APP=flaskapp python -m flask run --host=0.0.0.0
+$ FLASK_APP=flaskapp python3 -m flask run --host=0.0.0.0
 ```
 
 ## Using the REST API

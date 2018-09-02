@@ -21,6 +21,9 @@ class CustomOMX:
         self.player_thread = Thread(target=self.omx_runner.run)
         self.player_thread.start()
 
+    def __del__(self):
+        self.exit_event.set()
+
     def set_audio(self, url):
         self.empty_queue()
         self.stop_event.set()
