@@ -2,7 +2,6 @@ from queue import Queue, Empty, LifoQueue
 from threading import Event, Thread
 from time import sleep
 
-import os
 from omxplayer.player import OMXPlayer
 
 
@@ -36,7 +35,9 @@ class CustomOMX:
     def set_playlist(self, url_list):
         self.empty_queue()
         self.stop_event.set()
+        print('set_playlist')
         for url in url_list:
+            print(url)
             self.next_queue.put(url)
         self.pause_event.set()
 
@@ -62,9 +63,11 @@ class CustomOMX:
 
     def empty_queue(self):
         queue_content = []
+        print('empty_queue')
         try:
             queue_element = self.next_queue.get(False)
             while queue_element:
+                print(queue_element)
                 queue_content.append(queue_element)
                 queue_element = self.next_queue.get(False)
         except Empty:
@@ -114,16 +117,20 @@ class OMXRunner:
     def previous(self):
         self.stop_event.clear()
         self.stop()
-        next_queue = [self.current_music]
+        musics_queued = [self.current_music] if self.current_music else []
+        print('previous')
+        if self.current_music:
+            print(self.current_music)
         try:
             self.current_music = self.next_queue.get_nowait()
             music_queued = self.next_queue.get_nowait()
             while music_queued:
-                next_queue.append(music_queued)
+                print(music_queued)
+                musics_queued.append(music_queued)
                 music_queued = self.next_queue.get_nowait()
         except Empty:
             pass
-        for music in next_queue:
+        for music in musics_queued:
             self.next_queue.put(music)
         if self.current_music:
             self.player = OMXPlayer(self.current_music)
