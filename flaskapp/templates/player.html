@@ -11,16 +11,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
 </head>
     <body data-url="{{ base_url }}">
-        <div class="pure-g grid-buttons">
-            <div class="pure-u-1-3 grid-button">
-                <button class="pure-button button-xlarge button-secondary" onclick="previous();"><i class="fas fa-angle-double-left"></i></button>
-            </div>
-            <div class="pure-u-1-3 grid-button">
-                <button class="pure-button button-xlarge button-secondary" onclick="play();"><i class="fas fa-play"></i>&nbsp;<i class="fas fa-pause"></i></button>
-            </div>
-            <div class="pure-u-1-3 grid-button">
-                <button class="pure-button button-xlarge button-secondary" onclick="next();"><i class="fas fa-angle-double-right"></i></button>
-            </div>
+        <div class="pure-button-group control-buttons">
+            <button id="button-previous" class="pure-button button-xlarge button-secondary" onclick="previous();"><i class="fas fa-angle-double-left"></i></button>
+            <button id="button-play" class="pure-button button-xlarge button-secondary" onclick="play();"><i class="fas fa-play"></i>&nbsp;<i class="fas fa-pause"></i></button>
+            <button id="button-next" class="pure-button button-xlarge button-secondary" onclick="next();"><i class="fas fa-angle-double-right"></i></button>
         </div>
 
         <script src="{{ url_for('static', filename='script.js') }}"></script>

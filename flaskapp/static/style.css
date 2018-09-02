@@ -1,11 +1,27 @@
-.grid-button {
-    text-align: center;
+.control-buttons {
+    left: 50vw;
+    position: fixed;
+    top: 50vh;
+    transform: translate(-50%, -50%);
 }
 
 .button-xlarge {
     font-size: 300%;
 }
 
+.button-secondary, .button-success, .button-error {
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
 .button-secondary {
     background: rgb(66, 184, 221);
+}
+
+.button-success {
+    background: rgb(28, 184, 65) !important;
+}
+
+.button-error {
+    background: rgb(202, 60, 60) !important;
 }
