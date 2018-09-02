@@ -18,3 +18,7 @@ $ FLASK_APP=flaskapp python3 -m flask run --host=0.0.0.0
 After starting the application, a Swagger-UI is served at the url `localhost:5000/docs`. 
 You might have a CORS issue, then you won't have the choice but to change the swagger.json URL from the swagger UI 
 to match the direct URL of your application. From this URL, you can use various endpoints to pilot the media center.
+
+## Using the GUI
+The player GUI is served at the url `localhost:5000/gui`. You can submit here simple commands, but 
+there is no way to submit music url here for now.

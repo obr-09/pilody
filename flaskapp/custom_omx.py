@@ -2,7 +2,7 @@ from queue import Queue, Empty, LifoQueue
 from threading import Event, Thread
 from time import sleep
 
-from omxplayer.player import OMXPlayer
+from omxplayer.player import OMXPlayer, OMXPlayerDeadError
 
 
 class CustomOMX:
@@ -142,6 +142,8 @@ class OMXRunner:
         self.next_event.clear()
 
     def try_next(self):
-        if (not self.player or not self.player.is_playing) and \
-                not self.pause_event.is_set() and not self.stop_event.is_set():
+        try:
+            if (not self.player or self.player.playback_status() == 'Stopped') and not self.pause_event.is_set() and not
+                self.next()
+        except OMXPlayerDeadError:
             self.next()
