@@ -117,14 +117,17 @@ class OMXRunner:
     def next(self):
         self.stop_event.clear()
         self.stop()
+        print('next : stopped')
         if self.current_music:
-            self.previous_queue.put(self.current_music)
+            self.previous_queue.put_nowait(self.current_music)
         try:
-            self.current_music = self.next_queue.get(block=False)
+            self.current_music = self.next_queue.get_nowait()
         except Empty:
             pass
+        print('next : current : ' + self.current_music)
         if self.current_music:
             self.player = OMXPlayer(self.current_music)
+        print('next : player created')
 
     def try_next(self):
         if (not self.player or not self.player.is_playing) and \
