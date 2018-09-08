@@ -101,7 +101,7 @@ class OMXRunner:
             sleep(0.05)
             if self.stop_event.is_set():
                 self.stop()
-            elif self.pause_event.is_set():
+            if self.pause_event.is_set():
                 self.play_pause()
             if self.previous_event.is_set():
                 self.previous()
@@ -128,7 +128,7 @@ class OMXRunner:
         musics_queued = [self.current_music] if self.current_music else []
         try:
             self.current_music = self.next_musics.get_nowait()
-            # self.current_music_queue.get_nowait()
+            self.current_music_queue.get_nowait()
             music_queued = self.next_musics.get_nowait()
             while music_queued:
                 musics_queued.append(music_queued)
@@ -138,7 +138,7 @@ class OMXRunner:
         for music in musics_queued:
             self.next_musics.put(music)
         if self.current_music:
-            # self.current_music_queue.put(self.current_music)
+            self.current_music_queue.put(self.current_music)
             self.player = OMXPlayer(self.current_music['url'])
         self.previous_event.clear()
 
@@ -149,12 +149,12 @@ class OMXRunner:
             self.previous_musics.put_nowait(self.current_music)
         try:
             self.current_music = self.next_musics.get_nowait()
-            # self.current_music_queue.get_nowait()
+            self.current_music_queue.get_nowait()
         except Empty:
             pass
         if self.current_music:
             self.player = OMXPlayer(self.current_music['url'])
-            # self.current_music_queue.put(self.current_music)
+            self.current_music_queue.put(self.current_music)
         self.next_event.clear()
 
     def try_next(self):
