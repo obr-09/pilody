@@ -85,7 +85,7 @@ class OMXRunner:
 
     def __init__(self, previous_musics, next_musics, current_music, pause_event, previous_event, next_event, stop_event, exit_event):
         self.previous_musics = previous_musics
-        self.next_musics = next_musics
+        self.next_musics = next_musicsg
         self.current_music_queue = current_music
         self.pause_event = pause_event
         self.previous_event = previous_event
@@ -113,7 +113,7 @@ class OMXRunner:
         if self.player:
             self.player.play_pause()
         elif self.current_music:
-            self.player = OMXPlayer(self.current_music)
+            self.player = OMXPlayer(self.current_music.url)
         self.pause_event.clear()
 
     def stop(self):
@@ -138,7 +138,7 @@ class OMXRunner:
             self.next_musics.put(music)
         if self.current_music:
             self.current_music_queue.put(self.current_music)
-            self.player = OMXPlayer(self.current_music)
+            self.player = OMXPlayer(self.current_music.url)
         self.previous_event.clear()
 
     def next(self):
@@ -154,7 +154,7 @@ class OMXRunner:
             return
         if self.current_music:
             self.current_music_queue.put(self.current_music)
-            self.player = OMXPlayer(self.current_music)
+            self.player = OMXPlayer(self.current_music.url)
         self.next_event.clear()
 
     def try_next(self):
