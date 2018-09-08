@@ -73,10 +73,10 @@ function getMusic() {
         try {
             var musicInfo = JSON.parse(xhttp.responseText);
             Array.prototype.forEach.call(document.getElementsByClassName("music-name"), function(element) {
-                element.text(musicInfo.title);
+                element.innerHTML = musicInfo.title;
             });
             Array.prototype.forEach.call(document.getElementsByClassName("music-artist"), function(element) {
-                element.text(musicInfo.artist);
+                element.innerHTML = musicInfo.artist;
             });
         } catch (e) {
             console.log(e);
