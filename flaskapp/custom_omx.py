@@ -85,7 +85,7 @@ class OMXRunner:
 
     def __init__(self, previous_musics, next_musics, current_music, pause_event, previous_event, next_event, stop_event, exit_event):
         self.previous_musics = previous_musics
-        self.next_musics = next_musicsg
+        self.next_musics = next_musics
         self.current_music_queue = current_music
         self.pause_event = pause_event
         self.previous_event = previous_event
