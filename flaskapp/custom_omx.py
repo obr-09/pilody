@@ -109,7 +109,6 @@ class OMXRunner:
             self.try_next()
 
     def play_pause(self):
-        print(self.current_music.url)
         self.stop_event.clear()
         if self.player:
             self.player.play_pause()
@@ -153,8 +152,8 @@ class OMXRunner:
         except Empty:
             pass
         if self.current_music:
-            self.current_music_queue.put(self.current_music)
             self.player = OMXPlayer(self.current_music.url)
+            self.current_music_queue.put(self.current_music)
         self.next_event.clear()
 
     def try_next(self):

@@ -79,7 +79,6 @@ function getMusic() {
                 element.innerHTML = musicInfo.artist;
             });
         } catch (e) {
-            console.log(e);
         }
     };
     xhttp.send();
