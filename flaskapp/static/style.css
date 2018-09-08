@@ -1,8 +1,11 @@
+html {
+    height: 100%;
+    width: 100%;
+    background-color : #cdedfd
+}
+
 .control-buttons {
-    left: 50vw;
-    position: fixed;
-    top: 50vh;
-    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .button-xlarge {

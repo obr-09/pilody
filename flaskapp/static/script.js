@@ -17,7 +17,7 @@ function play() {
         setTimeout(function() {
             buttonPlay.classList.remove("button-success", "button-error");
             playTriggered = false;
-        }, 1000);
+        }, 250);
     };
     xhttp.send('action=pause');
 }
