@@ -64,7 +64,8 @@ class CustomOMX:
     def get_music(self):
         try:
             music = self.current_music_queue.get_nowait()
-            self.current_music_queue.put(music)
+            if self.current_music_queue.qsize() == 0:
+                self.current_music_queue.put(music)
         except Empty:
             music = None
         return music
