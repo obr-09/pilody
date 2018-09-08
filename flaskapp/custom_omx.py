@@ -83,10 +83,11 @@ class CustomOMX:
 
 class OMXRunner:
 
-    def __init__(self, previous_musics, next_musics, current_music, pause_event, previous_event, next_event, stop_event, exit_event):
+    def __init__(self, previous_musics, next_musics, current_music_queue, pause_event, previous_event, next_event,
+                 stop_event, exit_event):
         self.previous_musics = previous_musics
         self.next_musics = next_musics
-        self.current_music_queue = current_music
+        self.current_music_queue = current_music_queue
         self.pause_event = pause_event
         self.previous_event = previous_event
         self.next_event = next_event
@@ -127,7 +128,7 @@ class OMXRunner:
         musics_queued = [self.current_music] if self.current_music else []
         try:
             self.current_music = self.next_musics.get_nowait()
-            self.current_music_queue.get_nowait()
+            # self.current_music_queue.get_nowait()
             music_queued = self.next_musics.get_nowait()
             while music_queued:
                 musics_queued.append(music_queued)
@@ -137,7 +138,7 @@ class OMXRunner:
         for music in musics_queued:
             self.next_musics.put(music)
         if self.current_music:
-            self.current_music_queue.put(self.current_music)
+            # self.current_music_queue.put(self.current_music)
             self.player = OMXPlayer(self.current_music['url'])
         self.previous_event.clear()
 
@@ -148,12 +149,12 @@ class OMXRunner:
             self.previous_musics.put_nowait(self.current_music)
         try:
             self.current_music = self.next_musics.get_nowait()
-            self.current_music_queue.get_nowait()
+            # self.current_music_queue.get_nowait()
         except Empty:
             pass
         if self.current_music:
             self.player = OMXPlayer(self.current_music['url'])
-            self.current_music_queue.put(self.current_music)
+            # self.current_music_queue.put(self.current_music)
         self.next_event.clear()
 
     def try_next(self):
