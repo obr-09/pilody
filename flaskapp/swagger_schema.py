@@ -35,3 +35,18 @@ class MusicActionSchema(Schema):
             'type': 'string'
         }
     }
+
+
+class MusicInfoSchema(Schema):
+    type = 'object',
+    properties = {
+        'url': {
+            'type': 'string'
+        },
+        'title': {
+            'type': 'string'
+        },
+        'artist': {
+            'type': 'string'
+        }
+    }

@@ -6,8 +6,7 @@ class YoutubeUtility:
     @staticmethod
     def get_youtube_video(youtube_url):
         video = pafy.new(youtube_url)
-        audio_stream = video.getbestaudio()
-        video.audio_url = audio_stream.url
+        video.audio_url = video.getbestaudio().url
         return video
 
     @staticmethod
