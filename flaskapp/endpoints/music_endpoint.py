@@ -31,7 +31,7 @@ class MusicEndpoint(Resource):
     })
     def get(self):
         music = current_app.config['omx'].get_music()
-        return json.dumps(music), 200
+        return music, 200
 
     @swagger.doc({
         'tags': ['music'],
