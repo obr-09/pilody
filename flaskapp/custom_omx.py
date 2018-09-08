@@ -115,6 +115,7 @@ class OMXRunner:
             self.player.play_pause()
         elif self.current_music:
             self.player = OMXPlayer(self.current_music['url'])
+            self.current_music_queue.put(self.current_music)
         self.pause_event.clear()
 
     def stop(self):
@@ -138,8 +139,8 @@ class OMXRunner:
         for music in musics_queued:
             self.next_musics.put(music)
         if self.current_music:
-            self.current_music_queue.put(self.current_music)
             self.player = OMXPlayer(self.current_music['url'])
+            self.current_music_queue.put(self.current_music)
         self.previous_event.clear()
 
     def next(self):
