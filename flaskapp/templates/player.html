@@ -12,14 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
     <body data-url="{{ base_url }}">
+        <div class="music-info">
+            <h2 class="music-name"></h2>
+            <h3 class="music-artist"></h3>
+        </div>
         <div class="pure-button-group control-buttons">
             <button id="button-previous" class="pure-button button-xlarge button-secondary" onclick="previous();"><i class="fas fa-angle-double-left"></i></button>
             <button id="button-play" class="pure-button button-xlarge button-secondary" onclick="play();"><i class="fas fa-play"></i>&nbsp;<i class="fas fa-pause"></i></button>
             <button id="button-next" class="pure-button button-xlarge button-secondary" onclick="next();"><i class="fas fa-angle-double-right"></i></button>
-        </div>
-        <div class="music-info">
-            <h2 class="music-name"></h2>
-            <h3 class="music-artist"></h3>
         </div>
 
         <script src="{{ url_for('static', filename='script.js') }}"></script>
