@@ -43,15 +43,11 @@ class PlaylistEndpoint(Resource):
         if playlist_url:
             video_list = YoutubeUtility.get_youtube_playlist(playlist_url)
             if video_list:
-                url_list = []
-                title_list = []
-                artist_list = []
+                music_list = []
                 for video in video_list:
-                    url_list.append(video.audio_url)
-                    title_list.append(video.title)
-                    artist_list.append(video.author)
-                shuffle(url_list)
-                current_app.config['omx'].set_playlist(url_list, title_list, artist_list)
+                    music_list.append({'url': video.audio_url, 'title': video.title, 'artist': video.author})
+                shuffle(music_list)
+                current_app.config['omx'].set_playlist(music_list)
                 return MessageModel(message='The playlist was submitted'), 200
             else:
                 return MessageModel(message='No music found at Youtube playlist url'), 404

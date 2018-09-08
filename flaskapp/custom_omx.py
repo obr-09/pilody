@@ -28,17 +28,17 @@ class CustomOMX:
     def set_audio(self, url, title, artist):
         self.empty_queue(self.next_musics)
         self.stop_event.set()
-        self.next_musics.put({url: url, title: title, artist: artist})
+        self.next_musics.put({'url': url, 'title': title, 'artist': artist})
         self.pause_event.set()
 
     def add_audio(self, url, title, artist):
-        self.next_musics.put({url: url, title: title, artist: artist})
+        self.next_musics.put({'url': url, 'title': title, 'artist': artist})
 
-    def set_playlist(self, url_list, title_list, artist_list):
+    def set_playlist(self, music_list):
         self.empty_queue(self.next_musics)
         self.stop_event.set()
-        for url, title, artist in zip(url_list, title_list, artist_list):
-            self.next_musics.put({url: url, title: title, artist: artist})
+        for music in music_list:
+            self.next_musics.put({'url': music['url'], 'title': music['title'], 'artist': music['artist']})
         self.pause_event.set()
 
     def stop(self):
@@ -113,7 +113,7 @@ class OMXRunner:
         if self.player:
             self.player.play_pause()
         elif self.current_music:
-            self.player = OMXPlayer(self.current_music.url)
+            self.player = OMXPlayer(self.current_music['url'])
         self.pause_event.clear()
 
     def stop(self):
@@ -138,7 +138,7 @@ class OMXRunner:
             self.next_musics.put(music)
         if self.current_music:
             self.current_music_queue.put(self.current_music)
-            self.player = OMXPlayer(self.current_music.url)
+            self.player = OMXPlayer(self.current_music['url'])
         self.previous_event.clear()
 
     def next(self):
@@ -152,7 +152,7 @@ class OMXRunner:
         except Empty:
             pass
         if self.current_music:
-            self.player = OMXPlayer(self.current_music.url)
+            self.player = OMXPlayer(self.current_music['url'])
             self.current_music_queue.put(self.current_music)
         self.next_event.clear()
 
