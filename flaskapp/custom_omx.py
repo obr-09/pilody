@@ -150,8 +150,7 @@ class OMXRunner:
             self.current_music = self.next_musics.get_nowait()
             self.current_music_queue.get_nowait()
         except Empty:
-            self.next_event.clear()
-            return
+            self.current_music = None
         if self.current_music:
             self.current_music_queue.put(self.current_music)
             self.player = OMXPlayer(self.current_music.url)

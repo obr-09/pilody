@@ -67,9 +67,6 @@ function next() {
 
 setInterval(getMusic, 250);
 function getMusic() {
-    if (getMusicTriggered) {
-        return;
-    }
     var xhttp = new XMLHttpRequest();
     xhttp.open('GET', base_url + '/music', true);
     xhttp.onreadystatechange = function() {
