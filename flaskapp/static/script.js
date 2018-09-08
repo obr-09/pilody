@@ -70,13 +70,17 @@ function getMusic() {
     var xhttp = new XMLHttpRequest();
     xhttp.open('GET', base_url + '/music', true);
     xhttp.onreadystatechange = function() {
-        var musicInfo = JSON.parse(xhttp.responseText);
-        document.getElementsByClassName("music-name").forEach(function(element) {
-            element.text(musicInfo.title);
-        });
-        document.getElementsByClassName("music-artist").forEach(function(element) {
-            element.text(musicInfo.artist);
-        });
+        try {
+            var musicInfo = JSON.parse(xhttp.responseText);
+            Array.prototype.forEach.call(document.getElementsByClassName("music-name"), function(element) {
+                element.text(musicInfo.title);
+            });
+            Array.prototype.forEach.call(document.getElementsByClassName("music-artist"), function(element) {
+                element.text(musicInfo.artist);
+            });
+        } catch (e) {
+            console.log(e);
+        }
     };
     xhttp.send();
 }
