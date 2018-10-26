@@ -36,7 +36,7 @@ def create_app():
     gui_blueprint = Blueprint('gui', __name__)
     gui_api = FlaskApi(gui_blueprint)
     gui_api.add_resource(GuiEndpoint, '/gui')
-    gui_api.add_ressource(AddEndpoint, '/add')
+    gui_api.add_resource(AddEndpoint, '/add')
     flask_app.register_blueprint(gui_blueprint)
 
     return flask_app
