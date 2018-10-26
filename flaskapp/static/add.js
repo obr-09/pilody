@@ -1,5 +1,5 @@
 var gui_url = document.getElementsByTagName('body')[0].getAttribute('data-url');
-var base_url = gui_url.replace(/\/?gui\/?/, '');
+var base_url = gui_url.replace(/\/?add\/?/, '');
 
 
 $('#keyboard').jkeyboard({
@@ -13,13 +13,13 @@ function addResource() {
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', base_url + '/music', true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send('youtube_url=' + encodeURI(search));
+    xhttp.send('youtube_url=' + encodeURIComponent(search));
     xhttp.onreadystatechange = function() {
         if (xhttp.status >= 400) {
             xhttp = new XMLHttpRequest();
             xhttp.open('POST', base_url + '/playlist', true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send('playlist_url=' + encodeURI(search));
+            xhttp.send('playlist_url=' + encodeURIComponent(search));
             xhttp.onreadystatechange = function() {
                 $('#searchField').val('');
             };
