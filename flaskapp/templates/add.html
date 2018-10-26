@@ -13,10 +13,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
     <body data-url="{{ base_url }}">
-        <form class="pure-form" onsubmit="addResource();">
-            <input type="text" id="searchField" />
-        </form>
-        <div id="keyboard"></div>
+        <div class="search">
+            <form class="pure-form" onsubmit="addResource();">
+                <input type="text" id="searchField" />
+            </form>
+            <div id="keyboard"></div>
+        </div>
+        <a class="right-corner" href="gui">
+            <i class="fas fa-play"></i>
+        </a>
 
         <script src="../static/third-party/jquery-min.js"></script>
         <script src="../static/third-party/jkeyboard.js"></script>

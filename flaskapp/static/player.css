@@ -35,3 +35,20 @@ html {
     top: -100%;
     width: 100%
 }
+
+.right-corner {
+    border: 1px solid #185a82;
+    border-bottom-left-radius: 10px;
+    color: #185a82;
+    height: 4em;
+    line-height: 4em;
+    position: fixed;
+    right: -1px;
+    text-align: center;
+    top: -1px;
+    width: 4em;
+}
+
+.right-corner:hover {
+    cursor: pointer;
+}
