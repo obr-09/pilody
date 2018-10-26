@@ -14,7 +14,7 @@
 </head>
     <body data-url="{{ base_url }}">
         <div class="search">
-            <form class="pure-form" onsubmit="addResource();">
+            <form class="pure-form" onsubmit="addResource(); return false;">
                 <input type="text" id="searchField" />
             </form>
             <div id="keyboard"></div>
