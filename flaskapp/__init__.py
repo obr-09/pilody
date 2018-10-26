@@ -7,6 +7,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from flaskapp.custom_omx import CustomOMX
 from flaskapp.endpoints.control_endpoint import ControlEndpoint
 from flaskapp.endpoints.gui_endpoint import GuiEndpoint
+from flaskapp.endpoints.add_endpoint import AddEndpoint
 from flaskapp.endpoints.music_endpoint import MusicEndpoint
 from flaskapp.endpoints.playlist_endpoint import PlaylistEndpoint
 
@@ -35,6 +36,7 @@ def create_app():
     gui_blueprint = Blueprint('gui', __name__)
     gui_api = FlaskApi(gui_blueprint)
     gui_api.add_resource(GuiEndpoint, '/gui')
+    gui_api.add_ressource(AddEndpoint, '/add')
     flask_app.register_blueprint(gui_blueprint)
 
     return flask_app

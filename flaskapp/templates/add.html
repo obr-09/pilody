@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pilody</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href='../static/third-party/jkeyboard.css'/>
+    <link rel="stylesheet" href="../static/add.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+    <body data-url="{{ base_url }}">
+        <form class="pure-form" onsubmit="addResource();">
+            <input type="text" id="searchField" />
+        </form>
+        <div id="keyboard"></div>
+
+        <script src="../static/third-party/jquery-min.js"></script>
+        <script src="../static/third-party/jkeyboard.js"></script>
+        <script src="../static/add.js"></script>
+    </body>
+</html>
