@@ -45,7 +45,8 @@ class PlaylistEndpoint(Resource):
             if video_list:
                 music_list = []
                 for video in video_list:
-                    music_list.append({'url': video.audio_url, 'title': video.title, 'artist': video.author})
+                    if video.audio_url:
+                        music_list.append({'url': video.audio_url, 'title': video.title, 'artist': video.author})
                 shuffle(music_list)
                 current_app.config['omx'].set_playlist(music_list)
                 return MessageModel(message='The playlist was submitted'), 200

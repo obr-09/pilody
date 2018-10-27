@@ -16,6 +16,6 @@ class YoutubeUtility:
         for video in video_list:
             try:
                 video.audio_url = video.getbestaudio().url
-            except YoutubeDLError:
-                video_list.remove(video)
+            except Exception:
+                video.audio_url = None
         return video_list
