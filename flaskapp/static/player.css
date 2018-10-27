@@ -1,12 +1,16 @@
 html {
     height: 320px;
     width: 480px;
-    background-color : #cdedfd
+    background-color : #cdedfd;
+    position: relative;
 }
 
 body {
     width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .button-xlarge {
@@ -36,7 +40,7 @@ body {
     color: #185a82;
     height: 4em;
     line-height: 4em;
-    position: fixed;
+    position: absolute;
     right: -1px;
     text-align: center;
     bottom: -1px;
