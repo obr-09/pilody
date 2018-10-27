@@ -27,19 +27,17 @@ class CustomOMX:
 
     def set_audio(self, url, title, artist):
         self.empty_queue(self.next_musics)
-        self.stop_event.set()
         self.next_musics.put({'url': url, 'title': title, 'artist': artist})
-        self.pause_event.set()
+        self.next_event.set()
 
     def add_audio(self, url, title, artist):
         self.next_musics.put({'url': url, 'title': title, 'artist': artist})
 
     def set_playlist(self, music_list):
         self.empty_queue(self.next_musics)
-        self.stop_event.set()
         for music in music_list:
             self.next_musics.put({'url': music['url'], 'title': music['title'], 'artist': music['artist']})
-        self.pause_event.set()
+        self.next_eventg.set()
 
     def stop(self):
         self.stop_event.set()
