@@ -1,4 +1,5 @@
 import pafy
+from youtube_dl.utils import ExtractorError
 
 
 class YoutubeUtility:
@@ -13,5 +14,8 @@ class YoutubeUtility:
     def get_youtube_playlist(playlist_url):
         video_list = pafy.get_playlist2(playlist_url)
         for video in video_list:
-            video.audio_url = video.getbestaudio().url
+            try:
+                video.audio_url = video.getbestaudio().url
+            except ExtractorError:
+                video_list.remove(video)
         return video_list
