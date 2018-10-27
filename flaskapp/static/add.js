@@ -9,22 +9,44 @@ $('#keyboard').jkeyboard({
 
 
 function addResource() {
-    var search = $('#searchField').val();
+    var searchField = $('#searchField');
+    var search = searchField.val();
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', base_url + '/music', true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send('youtube_url=' + encodeURIComponent(search));
     xhttp.onreadystatechange = function() {
         if (xhttp.status >= 400) {
-            xhttp = new XMLHttpRequest();
-            xhttp.open('POST', base_url + '/playlist', true);
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send('playlist_url=' + encodeURIComponent(search));
-            xhttp.onreadystatechange = function() {
-                $('#searchField').val('');
+            xhttp2 = new XMLHttpRequest();
+            xhttp2.open('POST', base_url + '/playlist', true);
+            xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp2.onreadystatechange = function() {
+                if (xhttp2.status < 400) {
+                    searchField.addClass('success');
+                    $('#searchMessage').text('Playlist set.');
+                    setTimeout(function() {
+                        searchField.removeClass('success');
+                    }, 1000);
+                } else {
+                    searchField.addClass('error');
+                    $('#searchMessage').text('Not found.');
+                    setTimeout(function() {
+                        searchField.removeClass('error');
+                    }, 1000);
+                }
+                searchField.val('');
             };
+            searchField.addClass('progress');
+            $('#searchMessage').text('Searching playlist...');
+            xhttp2.send('playlist_url=' + encodeURIComponent(search));
         } else {
-            $('#searchField').val('');
+            $('#searchMessage').text('Music set.');
+            searchField.val('');
+            setTimeout(function() {
+                searchField.removeClass('success');
+            }, 1000);
         }
     };
+    searchField.addClass('progress');
+    $('#searchMessage').text('Searching music...');
+    xhttp.send('youtube_url=' + encodeURIComponent(search));
 }

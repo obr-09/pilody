@@ -26,9 +26,14 @@ html {
     cursor: pointer;
 }
 
-.search {
-    position: absolute;
-    top: 50vh;
-    transform: translateY(-50%);
-    width: 100%;
+.progress {
+    border-color: rgb(223, 117, 20);
+}
+
+.success {
+    border-color: rgb(28, 184, 65);
+}
+
+.error {
+    border-color: rgb(202, 60, 60);
 }
