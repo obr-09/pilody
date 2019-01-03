@@ -37,7 +37,7 @@ class CustomOMX:
         self.empty_queue(self.next_musics)
         for music in music_list:
             self.next_musics.put({'url': music['url'], 'title': music['title'], 'artist': music['artist']})
-        self.next_eventg.set()
+        self.next_event.set()
 
     def stop(self):
         self.stop_event.set()

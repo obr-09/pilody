@@ -24,7 +24,6 @@ class OMXRunner:
                 self.go_back()
                 self.previous_event.clear()
 
-
     def go_next(self):
         next_music = self.next_musics.get_nowait()
         if next_music:

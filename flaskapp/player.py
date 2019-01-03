@@ -29,3 +29,30 @@ class Player:
 
     def go_previous(self):
         self.previous_event.set()
+
+    def add_music(self, music):
+        self.next_musics_queue.put(music)
+
+    def set_music(self, music):
+        Player.empty_queue(self.next_musics_queue)
+        previous_music = self.current_music_queue.get_nowait()
+        if previous_music:
+            self.previous_musics_queue.put(previous_music)
+        self.current_music_queue.put(music)
+
+    def set_playlist(self, music_list):
+        Player.empty_queue(self.next_musics_queue)
+        for music in music_list:
+            self.next_musics_queue.put(music)
+
+    @staticmethod
+    def empty_queue(queue):
+        queue_content = []
+        try:
+            queue_element = queue.get(False)
+            while queue_element:
+                queue_content.append(queue_element)
+                queue_element = queue.get(False)
+        except Empty:
+            pass
+        return queue_content
