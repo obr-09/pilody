@@ -4,19 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pilody</title>
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
-          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='third-party/pure-min.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='player.css') }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
     <body data-url="{{ base_url }}">
+        <div class="music-info">
+            <h2 class="music-name"></h2>
+            <h3 class="music-artist"></h3>
+        </div>
         <div class="pure-button-group control-buttons">
             <button id="button-previous" class="pure-button button-xlarge button-secondary" onclick="previous();"><i class="fas fa-angle-double-left"></i></button>
             <button id="button-play" class="pure-button button-xlarge button-secondary" onclick="play();"><i class="fas fa-play"></i>&nbsp;<i class="fas fa-pause"></i></button>
             <button id="button-next" class="pure-button button-xlarge button-secondary" onclick="next();"><i class="fas fa-angle-double-right"></i></button>
         </div>
+        <a class="right-corner" href="add">
+            <i class="fas fa-music"></i>
+        </a>
 
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='player.js') }}"></script>
     </body>
 </html>

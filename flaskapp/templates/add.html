@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pilody - Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='third-party/pure-min.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='third-party/jkeyboard.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='add.css') }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+    <body data-url="{{ base_url }}">
+        <div class="search">
+            <form class="pure-form" onsubmit="addResource(); return false;">
+                <input type="text" id="searchField" />
+                <span id="searchMessage"></span>
+            </form>
+            <div id="keyboard"></div>
+        </div>
+        <a class="right-corner" href="gui">
+            <i class="fas fa-play"></i>
+        </a>
+
+        <script src="{{ url_for('static', filename='third-party/jquery-min.js') }}"></script>
+        <script src="{{ url_for('static', filename='third-party/jkeyboard.js') }}"></script>
+        <script src="{{ url_for('static', filename='add.js') }}"></script>
+    </body>
+</html>

@@ -13,11 +13,11 @@ function play() {
     xhttp.onreadystatechange = function() {
         var buttonPlay = document.getElementById("button-play");
         playTriggered = true;
-        buttonPlay.classList.add((xhttp.status % 100 === 2) ? "button-success" : "button-error");
+        buttonPlay.classList.add((xhttp.status / 100 === 2) ? "button-success" : "button-error");
         setTimeout(function() {
             buttonPlay.classList.remove("button-success", "button-error");
             playTriggered = false;
-        }, 1000);
+        }, 250);
     };
     xhttp.send('action=pause');
 }
@@ -34,7 +34,7 @@ function previous() {
     xhttp.onreadystatechange = function() {
         var buttonPrevious = document.getElementById("button-previous");
         previousTriggered = true;
-        buttonPrevious.classList.add((xhttp.status % 100 === 2) ? "button-success" : "button-error");
+        buttonPrevious.classList.add((xhttp.status / 100 === 2) ? "button-success" : "button-error");
         setTimeout(function() {
             buttonPrevious.classList.remove("button-success", "button-error");
             previousTriggered = false;
@@ -55,11 +55,31 @@ function next() {
     xhttp.onreadystatechange = function() {
         var buttonNext = document.getElementById("button-next");
         nextTriggered = true;
-        buttonNext.classList.add((xhttp.status % 100 === 2) ? "button-success" : "button-error");
+        buttonNext.classList.add((xhttp.status / 100 === 2) ? "button-success" : "button-error");
         setTimeout(function() {
             buttonNext.classList.remove("button-success", "button-error");
             nextTriggered = false;
         }, 1000);
     };
     xhttp.send('action=next');
+}
+
+
+setInterval(getMusic, 250);
+function getMusic() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('GET', base_url + '/music', true);
+    xhttp.onreadystatechange = function() {
+        try {
+            var musicInfo = JSON.parse(xhttp.responseText);
+            Array.prototype.forEach.call(document.getElementsByClassName("music-name"), function(element) {
+                element.innerHTML = musicInfo.title;
+            });
+            Array.prototype.forEach.call(document.getElementsByClassName("music-artist"), function(element) {
+                element.innerHTML = musicInfo.artist;
+            });
+        } catch (e) {
+        }
+    };
+    xhttp.send();
 }

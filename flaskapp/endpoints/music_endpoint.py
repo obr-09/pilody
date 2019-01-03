@@ -1,15 +1,37 @@
+import json
+
 from flask import current_app, request
 from flask_restful import Resource
 from flask_restful_swagger_2 import swagger
 
-from flaskapp.swagger_schema import MessageModel, YoutubeUrlSchema
+from flaskapp.swagger_schema import MessageModel, YoutubeUrlSchema, YoutubeQuerySchema, MusicInfoSchema
 from flaskapp.youtube_utility import YoutubeUtility
 
 
 class MusicEndpoint(Resource):
 
+    @swagger.doc({
+        'tags': ['music'],
+        'description': 'Getting informations about the current music',
+        'parameters': [
+        ],
+        'responses': {
+            '200': {
+                'description': 'Music informations',
+                'schema': MusicInfoSchema,
+                'examples': {
+                    'application/json': {
+                        'url': 'URL of the music',
+                        'title': 'Title fetched from music source',
+                        'artist': 'Artist or author who submitted the music'
+                    }
+                }
+            }
+        }
+    })
     def get(self):
-        return {'error': 'Not implemented'}, 501
+        music = current_app.config['omx'].get_music()
+        return music, 200
 
     @swagger.doc({
         'tags': ['music'],
@@ -41,7 +63,7 @@ class MusicEndpoint(Resource):
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
             if video_data:
-                current_app.config['omx'].set_audio(video_data.audio_url)
+                current_app.config['omx'].set_audio(video_data.audio_url, video_data.title, video_data.author)
                 return MessageModel(message='The music was submitted'), 200
             else:
                 return MessageModel(message='No music found from the Youtube url'), 400

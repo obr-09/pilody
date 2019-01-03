@@ -19,6 +19,15 @@ class YoutubeUrlSchema(Schema):
     }
 
 
+class YoutubeQuerySchema(Schema):
+    type = 'object'
+    properties = {
+        'query': {
+            'type': 'string'
+        }
+    }
+
+
 class PlaylistUrlSchema(Schema):
     type = 'object'
     properties = {
@@ -32,6 +41,21 @@ class MusicActionSchema(Schema):
     type = 'object'
     properties = {
         'action': {
+            'type': 'string'
+        }
+    }
+
+
+class MusicInfoSchema(Schema):
+    type = 'object',
+    properties = {
+        'url': {
+            'type': 'string'
+        },
+        'title': {
+            'type': 'string'
+        },
+        'artist': {
             'type': 'string'
         }
     }
