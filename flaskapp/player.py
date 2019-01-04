@@ -1,4 +1,4 @@
-from queue import Queue, LifoQueue
+from queue import Empty, Queue, LifoQueue
 from threading import Event, Thread
 
 from flaskapp.omx_runner import OMXRunner
@@ -9,6 +9,7 @@ class Player:
     def __init__(self):
         # Events
         self.exit_event = Event()
+        self.play_pause_event = Event()
         self.next_event = Event()
         self.previous_event = Event()
         # Music queues
@@ -17,7 +18,7 @@ class Player:
         self.previous_musics_queue = LifoQueue()
         # OMX Player instantiation
         self.omx_runner = OMXRunner(self.current_music_queue, self.next_musics_queue, self.previous_musics_queue,
-                                    self.exit_event, self.next_event, self.previous_event)
+                                    self.exit_event, self.play_pause_event, self.next_event, self.previous_event)
         self.runner_thread = Thread(target=self.omx_runner.run)
         self.runner_thread.start()
 
@@ -32,6 +33,10 @@ class Player:
 
     def add_music(self, music):
         self.next_musics_queue.put(music)
+
+    def get_music(self):
+        music_queue = list(self.current_music_queue)
+        return music_queue[0] if music_queue else None
 
     def set_music(self, music):
         Player.empty_queue(self.next_musics_queue)
