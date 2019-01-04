@@ -2,7 +2,8 @@ from time import sleep
 
 from dbus.exceptions import DBusException
 from omxplayer.player import OMXPlayer, OMXPlayerDeadError
-from youtube_utility import YoutubeUtility
+
+from flaskapp.youtube_utility import YoutubeUtility
 
 
 class OMXRunner:
