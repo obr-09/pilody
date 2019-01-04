@@ -9,12 +9,13 @@ from flaskapp.youtube_utility import YoutubeUtility
 
 class OMXRunner:
 
-    def __init__(self, current_queue, next_queue, previous_queue, exit_event, play_pause_event, next_event, previous_event):
+    def __init__(self, current_queue, next_queue, previous_queue, exit_event, play_pause_event, next_event, previous_event, restart_event):
         # Setting events
         self.exit_event = exit_event
         self.play_pause_event = play_pause_event
         self.next_event = next_event
         self.previous_event = previous_event
+        self.restart_event = restart_event
         # Setting music queues
         self.current_music = current_queue
         self.next_musics = next_queue
@@ -34,6 +35,9 @@ class OMXRunner:
             if self.previous_event.is_set():
                 self.go_back()
                 self.previous_event.clear()
+            if self.restart_event.is_set():
+                self.restart_music()
+                self.restart_event.clear()
             self.try_next()
 
     def stop(self):
@@ -88,3 +92,7 @@ class OMXRunner:
                 self.go_next()
         except (OMXPlayerDeadError, DBusException):
             self.go_next()
+
+    def restart_music(self):
+        self.stop()
+        self.play_pause()
