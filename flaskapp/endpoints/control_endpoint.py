@@ -38,13 +38,13 @@ class ControlEndpoint(Resource):
     def post(self):
         action = request.form['action']
         if action in ['play', 'resume', 'pause']:
-            current_app.config['omx'].toggle_pause()
+            current_app.config['player'].toggle_pause()
         elif action == 'stop':
-            current_app.config['omx'].stop()
+            current_app.config['player'].stop()
         elif action == 'previous':
-            current_app.config['omx'].previous()
+            current_app.config['player'].previous()
         elif action == 'next':
-            current_app.config['omx'].next()
+            current_app.config['player'].next()
         else:
             return MessageModel(message='Unrecognized action.'), 400
         return MessageModel(message='Action {} submitted'.format(action)), 200

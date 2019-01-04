@@ -4,7 +4,7 @@ from flask_restful import Api as FlaskApi
 from flask_restful_swagger_2 import Api as SwaggerApi
 from flask_swagger_ui import get_swaggerui_blueprint
 
-from flaskapp.custom_omx import CustomOMX
+from flaskapp.player import Player
 from flaskapp.endpoints.control_endpoint import ControlEndpoint
 from flaskapp.endpoints.gui_endpoint import GuiEndpoint
 from flaskapp.endpoints.add_endpoint import AddEndpoint
@@ -16,7 +16,7 @@ def create_app():
     flask_app = Flask(__name__)
     CORS(flask_app)
 
-    flask_app.config['omx'] = CustomOMX()
+    flask_app.config['player'] = Player()
 
     # Blueprint for REST API
     app_blueprint = Blueprint('rest', __name__)
