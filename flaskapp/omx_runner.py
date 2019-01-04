@@ -9,13 +9,15 @@ from flaskapp.youtube_utility import YoutubeUtility
 
 class OMXRunner:
 
-    def __init__(self, current_queue, next_queue, previous_queue, exit_event, play_pause_event, next_event, previous_event, restart_event):
+    def __init__(self, current_queue, next_queue, previous_queue, exit_event, play_pause_event, next_event,
+                 previous_event, restart_event, pause_event):
         # Setting events
         self.exit_event = exit_event
         self.play_pause_event = play_pause_event
         self.next_event = next_event
         self.previous_event = previous_event
         self.restart_event = restart_event
+        self.pause_event = pause_event
         # Setting music queues
         self.current_music = current_queue
         self.next_musics = next_queue
@@ -38,6 +40,9 @@ class OMXRunner:
             if self.restart_event.is_set():
                 self.restart_music()
                 self.restart_event.clear()
+            if self.pause_event.is_set():
+                self.play_pause()
+                self.pause_event.clear()
             self.try_next()
 
     def stop(self):
@@ -66,10 +71,10 @@ class OMXRunner:
         except Empty:
             try:
                 current_music = self.current_music.get_nowait()
-                next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['url'])
+                next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['raw_url'])
                 video_data = YoutubeUtility.get_youtube_video(next_video_url)
                 if video_data:
-                    self.current_music.put({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
+                    self.current_music.put({'raw_url': next_video_url, 'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
             except Empty:
                 pass
 

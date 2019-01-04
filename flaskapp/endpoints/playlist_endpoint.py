@@ -93,7 +93,7 @@ class PlaylistEndpoint(Resource):
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
             if video_data:
-                current_app.config['player'].add_music({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
+                current_app.config['player'].add_music({'raw_url': youtube_url, 'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
                 return MessageModel(message='The music was submitted to the playlist'), 200
             else:
                 return MessageModel(message='No music found from the Youtube url'), 404

@@ -23,7 +23,7 @@ class MusicEndpoint(Resource):
                     'application/json': {
                         'url': 'URL of the music',
                         'title': 'Title fetched from music source',
-                        'artist': 'Artist or author who submitted the music'
+                        'author': 'Author who submitted the music'
                     }
                 }
             }
@@ -63,7 +63,7 @@ class MusicEndpoint(Resource):
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
             if video_data:
-                current_app.config['player'].set_music({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
+                current_app.config['player'].set_music({'raw_url': youtube_url, 'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
                 return MessageModel(message='The music was submitted'), 200
             else:
                 return MessageModel(message='No music found from the Youtube url'), 400

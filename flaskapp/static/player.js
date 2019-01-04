@@ -76,7 +76,7 @@ function getMusic() {
                 element.innerHTML = musicInfo.title;
             });
             Array.prototype.forEach.call(document.getElementsByClassName("music-artist"), function(element) {
-                element.innerHTML = musicInfo.artist;
+                element.innerHTML = musicInfo.author;
             });
         } catch (e) {
         }
