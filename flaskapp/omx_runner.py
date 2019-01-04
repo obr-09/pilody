@@ -2,6 +2,7 @@ from time import sleep
 
 from dbus.exceptions import DBusException
 from omxplayer.player import OMXPlayer, OMXPlayerDeadError
+from youtube_utility import YoutubeUtility
 
 
 class OMXRunner:
@@ -55,6 +56,14 @@ class OMXRunner:
             if current_music:
                 self.previous_musics.put(current_music)
             self.current_music.put(next_music)
+            self.play_pause()
+        else:
+            current_music = self.current_music.get_nowait()
+            if current_music:
+                next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['url'])
+                video_data = YoutubeUtility.get_youtube_video(next_video_url)
+                if video_data:
+                    self.current_music.put({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
 
     def go_back(self):
         previous_music = self.previous_musics.get_nowait()
@@ -65,6 +74,7 @@ class OMXRunner:
                 # TODO: Need reordering here
                 self.next_musics.put(current_music)
             self.current_music.put(previous_music)
+            self.play_pause()
 
     def try_next(self):
         try:
