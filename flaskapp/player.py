@@ -43,9 +43,11 @@ class Player:
 
     def set_music(self, music):
         Player.empty_queue(self.next_musics_queue)
-        previous_music = self.current_music_queue.get_nowait()
-        if previous_music:
+        try:
+            previous_music = self.current_music_queue.get_nowait()
             self.previous_musics_queue.put(previous_music)
+        except Empty:
+            pass
         self.current_music_queue.put(music)
 
     def set_playlist(self, music_list):
