@@ -49,7 +49,7 @@ class OMXRunner:
         if self.omx:
             self.omx.play_pause()
         else:
-            current_music_queue = list(self.current_music)
+            current_music_queue = list(self.current_music.queue)
             current_music = current_music_queue[0] if current_music_queue else None
             if current_music:
                 self.omx = OMXPlayer(current_music['url'])

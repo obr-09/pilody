@@ -27,11 +27,11 @@ class Player:
         self.exit_event.set()
 
     def get_music(self):
-        music_queue = list(self.current_music_queue)
+        music_queue = list(self.current_music_queue.queue)
         return music_queue[0] if music_queue else None
 
     def get_next_musics(self):
-        return list(self.next_musics_queue)
+        return list(self.next_musics_queue.queue)
 
     def go_next(self):
         self.next_event.set()
