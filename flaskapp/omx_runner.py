@@ -60,12 +60,14 @@ class OMXRunner:
             self.current_music.put(next_music)
             self.play_pause()
         except Empty:
-            current_music = self.current_music.get_nowait()
-            if current_music:
+            try:
+                current_music = self.current_music.get_nowait()
                 next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['url'])
                 video_data = YoutubeUtility.get_youtube_video(next_video_url)
                 if video_data:
                     self.current_music.put({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
+            except Empty:
+                pass
 
     def go_back(self):
         try:
