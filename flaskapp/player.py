@@ -25,6 +25,13 @@ class Player:
     def __del__(self):
         self.exit_event.set()
 
+    def get_music(self):
+        music_queue = list(self.current_music_queue)
+        return music_queue[0] if music_queue else None
+
+    def get_next_musics(self):
+        return list(self.next_musics_queue)
+
     def go_next(self):
         self.next_event.set()
 
@@ -33,10 +40,6 @@ class Player:
 
     def add_music(self, music):
         self.next_musics_queue.put(music)
-
-    def get_music(self):
-        music_queue = list(self.current_music_queue)
-        return music_queue[0] if music_queue else None
 
     def set_music(self, music):
         Player.empty_queue(self.next_musics_queue)

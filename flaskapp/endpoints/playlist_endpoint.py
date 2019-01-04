@@ -10,8 +10,16 @@ from flaskapp.youtube_utility import YoutubeUtility
 
 class PlaylistEndpoint(Resource):
 
+    @swagger.doc({
+        'tags': ['music'],
+        'description': 'Get the list of musics playing or waiting to be played'
+    })
     def get(self):
-        pass
+        playing_music = current_app.config['omx'].get_music()
+        next_musics = current_app.config['omx'].get_next_musics()
+        if playing_music:
+            next_musics.insert(0, playing_music)
+        return next_musics
 
     @swagger.doc({
         'tags': ['music'],
