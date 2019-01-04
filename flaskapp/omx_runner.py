@@ -1,3 +1,4 @@
+from queue import Empty
 from time import sleep
 
 from dbus.exceptions import DBusException
@@ -50,15 +51,15 @@ class OMXRunner:
                 self.omx = OMXPlayer(current_music['url'])
 
     def go_next(self):
-        next_music = self.next_musics.get_nowait()
-        if next_music:
+        try:
+            next_music = self.next_musics.get_nowait()
             self.stop()
             current_music = self.current_music.get_nowait()
             if current_music:
                 self.previous_musics.put(current_music)
             self.current_music.put(next_music)
             self.play_pause()
-        else:
+        except Empty:
             current_music = self.current_music.get_nowait()
             if current_music:
                 next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['url'])
@@ -67,8 +68,8 @@ class OMXRunner:
                     self.current_music.put({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
 
     def go_back(self):
-        previous_music = self.previous_musics.get_nowait()
-        if previous_music:
+        try:
+            previous_music = self.previous_musics.get_nowait()
             self.stop()
             current_music = self.current_music.get_nowait()
             if current_music:
@@ -76,6 +77,8 @@ class OMXRunner:
                 self.next_musics.put(current_music)
             self.current_music.put(previous_music)
             self.play_pause()
+        except Empty:
+            pass
 
     def try_next(self):
         try:

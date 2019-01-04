@@ -6,5 +6,4 @@ flask-restful-swagger-2
 flask_swagger_ui
 omxplayer-wrapper
 pafy
-urllib2
 youtube-dl
