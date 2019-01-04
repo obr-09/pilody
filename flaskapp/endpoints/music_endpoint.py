@@ -30,7 +30,7 @@ class MusicEndpoint(Resource):
         }
     })
     def get(self):
-        music = current_app.config['omx'].get_music()
+        music = current_app.config['player'].get_music()
         return music, 200
 
     @swagger.doc({

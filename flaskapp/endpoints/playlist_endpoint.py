@@ -10,16 +10,16 @@ from flaskapp.youtube_utility import YoutubeUtility
 
 class PlaylistEndpoint(Resource):
 
-    @swagger.doc({
-        'tags': ['music'],
-        'description': 'Get the list of musics playing or waiting to be played'
-    })
-    def get(self):
-        playing_music = current_app.config['omx'].get_music()
-        next_musics = current_app.config['omx'].get_next_musics()
-        if playing_music:
-            next_musics.insert(0, playing_music)
-        return next_musics
+    # @swagger.doc({
+    #     'tags': ['music'],
+    #     'description': 'Get the list of musics playing or waiting to be played'
+    # })
+    # def get(self):
+    #     playing_music = current_app.config['player'].get_music()
+    #     next_musics = current_app.config['player'].get_next_musics()
+    #     if playing_music:
+    #         next_musics.insert(0, playing_music)
+    #     return next_musics
 
     @swagger.doc({
         'tags': ['music'],
@@ -56,7 +56,7 @@ class PlaylistEndpoint(Resource):
                     if video.audio_url:
                         music_list.append({'url': video.audio_url, 'title': video.title, 'author': video.author})
                 shuffle(music_list)
-                current_app.config['omx'].set_playlist(music_list)
+                current_app.config['player'].set_playlist(music_list)
                 return MessageModel(message='The playlist was submitted'), 200
             else:
                 return MessageModel(message='No music found at Youtube playlist url'), 404
@@ -93,7 +93,7 @@ class PlaylistEndpoint(Resource):
         if youtube_url:
             video_data = YoutubeUtility.get_youtube_video(youtube_url)
             if video_data:
-                current_app.config['omx'].add_music({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
+                current_app.config['player'].add_music({'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
                 return MessageModel(message='The music was submitted to the playlist'), 200
             else:
                 return MessageModel(message='No music found from the Youtube url'), 404
