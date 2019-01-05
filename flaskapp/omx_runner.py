@@ -71,10 +71,12 @@ class OMXRunner:
         except Empty:
             try:
                 current_music = self.current_music.get_nowait()
+                self.stop()
                 next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['raw_url'])
                 video_data = YoutubeUtility.get_youtube_video(next_video_url)
                 if video_data:
                     self.current_music.put({'raw_url': next_video_url, 'url': video_data.audio_url, 'title': video_data.title, 'author': video_data.author})
+                self.play_pause()
             except Empty:
                 pass
 
@@ -93,7 +95,7 @@ class OMXRunner:
 
     def try_next(self):
         try:
-            if (not self.omx or self.omx.playback_status() == 'Stopped'):
+            if not self.omx or self.omx.playback_status() == 'Stopped':
                 self.go_next()
         except (OMXPlayerDeadError, DBusException):
             self.go_next()
