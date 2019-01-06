@@ -63,15 +63,24 @@ class OMXRunner:
         try:
             next_music = self.next_musics.get_nowait()
             self.stop()
-            current_music = self.current_music.get_nowait()
-            if current_music:
-                self.previous_musics.put(current_music)
+            try:
+                current_music = self.current_music.get_nowait()
+                if current_music:
+                    self.previous_musics.put(current_music)
+            except Empty:
+                pass
             self.current_music.put(next_music)
             self.play_pause()
         except Empty:
             try:
                 current_music = self.current_music.get_nowait()
                 self.stop()
+                try:
+                    current_music = self.current_music.get_nowait()
+                    if current_music:
+                        self.previous_musics.put(current_music)
+                except Empty:
+                    pass
                 next_video_url = YoutubeUtility.get_youtube_next_video_url(current_music['raw_url'])
                 video_data = YoutubeUtility.get_youtube_video(next_video_url)
                 if video_data:
