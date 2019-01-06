@@ -95,8 +95,17 @@ class OMXRunner:
             self.stop()
             current_music = self.current_music.get_nowait()
             if current_music:
-                # TODO: Need reordering here
+                next_music_list = []
+                try:
+                    queue_element = self.next_musics.get(False)
+                    while queue_element:
+                        next_music_list.append(queue_element)
+                        queue_element = self.next_musics.get(False)
+                except Empty:
+                    pass
                 self.next_musics.put(current_music)
+                for music in next_music_list:
+                    self.next_musics.put(music)
             self.current_music.put(previous_music)
             self.play_pause()
         except Empty:
